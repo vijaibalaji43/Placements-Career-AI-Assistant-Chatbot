@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSGCAS Placement & Career AI Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation Header -->
+        <header class="top-header">
+            <div class="brand-container">
+                <div class="logo-badge">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>PSG College of Arts and Science</h1>
+                    <h2>Career Development Center (CDC) • AI Doubt & Placement Portal</h2>
+                </div>
+            </div>
+            <div class="header-controls">
+                <div class="status-indicator">
+                    <span class="status-dot green"></span>
+                    <span class="status-label" id="statusLabel">CDC System Online</span>
+                </div>
+                <button class="icon-btn" id="ttsToggleBtn" title="Toggle Speech Output">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+                <button class="icon-btn" id="themeToggleBtn" title="Toggle Dark/Light Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body Layout: Sidebar + Main Content -->
+        <div class="content-wrapper">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <button class="nav-item active" data-tab="chat">
+                        <i class="fa-solid fa-comments"></i>
+                        <span>AI Doubt Solver</span>
+                    </button>
+                    <button class="nav-item" data-tab="interview">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <span>Mock Interview</span>
+                    </button>
+                    <button class="nav-item" data-tab="resume">
+                        <i class="fa-solid fa-file-contract"></i>
+                        <span>Resume Analyzer</span>
+                    </button>
+                    <button class="nav-item" data-tab="rectify">
+                        <i class="fa-solid fa-headset"></i>
+                        <span>Rectify Query (Escalate)</span>
+                    </button>
+                    <button class="nav-item" data-tab="faqs">
+                        <i class="fa-solid fa-circle-question"></i>
+                        <span>Placement FAQs</span>
+                    </button>
+                </nav>
+
+                <!-- CDC Contact Information Card -->
+                <div class="cdc-info-card">
+                    <div class="card-title">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span>CDC Contact Info</span>
+                    </div>
+                    <ul class="contact-list">
+                        <li><i class="fa-solid fa-location-dot"></i> Ground Floor, C-Block</li>
+                        <li><i class="fa-solid fa-envelope"></i> cdc@psgcas.ac.in</li>
+                        <li><i class="fa-solid fa-envelope-open-text"></i> seedtraining@psgcas.ac.in</li>
+                        <li><i class="fa-solid fa-phone"></i> 0422 – 430 3421</li>
+                        <li><i class="fa-solid fa-clock"></i> Mon-Fri: 9:00 AM - 5:00 PM</li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Main Interactive Content Panels -->
+            <main class="main-panel">
+                <!-- TAB 1: AI Chat Assistant -->
+                <section class="tab-content active" id="chat-tab">
+                    <div class="chat-header-info">
+                        <div class="chat-title">
+                            <i class="fa-solid fa-robot"></i>
+                            <div>
+                                <h3>PSGCAS AI Career Assistant</h3>
+                                <p>Ask any question about campus placement, SEED training, company criteria, or career guidance.</p>
+                            </div>
+                        </div>
+                        <button class="clear-chat-btn" id="clearChatBtn">
+                            <i class="fa-solid fa-trash-can"></i> Clear Chat
+                        </button>
+                    </div>
+
+                    <!-- Quick Prompt Suggestion Chips -->
+                    <div class="prompt-chips">
+                        <button class="chip-btn" data-prompt="How do I register for campus placement in 5th semester?">
+                            📝 Placement Registration
+                        </button>
+                        <button class="chip-btn" data-prompt="What are the top companies visiting PSGCAS and salary packages?">
+                            🏢 Top Recruiters & CTC
+                        </button>
+                        <button class="chip-btn" data-prompt="What is SEED training and how does it help me prepare?">
+                            🎯 SEED Training Details
+                        </button>
+                        <button class="chip-btn" data-prompt="What are the eligibility criteria regarding CGPA and backlogs?">
+                            📊 CGPA & Backlog Rules
+                        </button>
+                        <button class="chip-btn" data-prompt="How do I rectify an error in my placement registration data?">
+                            🛠️ Rectify Registration Error
+                        </button>
+                    </div>
+
+                    <!-- Chat Messages List -->
+                    <div class="chat-messages-box" id="chatMessages">
+                        <div class="message bot-message">
+                            <div class="avatar">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <div class="message-content">
+                                <div class="msg-header">
+                                    <span class="sender-name">PSGCAS Placement Bot</span>
+                                    <span class="time-stamp">Just now</span>
+                                </div>
+                                <div class="msg-text">
+                                    <p>Welcome to the <strong>PSG College of Arts and Science Placement & Career Guidance AI Portal</strong>! 🎓</p>
+                                    <p>How can I assist you with your placement journey today? You can pick a quick topic above or type your question below!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Input Area -->
+                    <div class="chat-input-wrapper">
+                        <textarea id="chatInput" placeholder="Type your placement doubt or career query here..." rows="1"></textarea>
+                        <button id="sendBtn" class="send-btn">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Send</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- TAB 2: Mock Interview Simulator -->
+                <section class="tab-content" id="interview-tab">
+                    <div class="section-header">
+                        <h2><i class="fa-solid fa-user-tie"></i> Mock Interview Simulator</h2>
+                        <p>Prepare for company interview rounds by selecting your academic stream.</p>
+                    </div>
+                    <div class="stream-selector-card">
+                        <label for="streamSelect">Select Your Academic Stream:</label>
+                        <select id="streamSelect" class="custom-select">
+                            <option value="Computer Science / IT / BCA">Computer Science / IT / BCA / MCA</option>
+                            <option value="Commerce / BBA / Economics">Commerce / BBA / Corporate Secretaryship</option>
+                            <option value="Science / Biotechnology / Chemistry">Biotechnology / Biochemistry / Chemistry / Physics</option>
+                            <option value="General HR">General HR & Behavioral Rounds</option>
+                        </select>
+                        <button id="generateQuestionsBtn" class="primary-btn">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Interview Questions
+                        </button>
+                    </div>
+
+                    <div id="questionsContainer" class="questions-list">
+                        <!-- Questions populated via JavaScript -->
+                    </div>
+                </section>
+
+                <!-- TAB 3: Resume Analyzer -->
+                <section class="tab-content" id="resume-tab">
+                    <div class="section-header">
+                        <h2><i class="fa-solid fa-file-contract"></i> AI Resume Analyzer</h2>
+                        <p>Paste your resume summary or key bullet points to receive instant formatting and placement advice.</p>
+                    </div>
+                    <div class="resume-input-card">
+                        <textarea id="resumeInput" class="resume-textarea" placeholder="Paste your resume text here (Projects, Skills, Education, Certifications, Experience)..."></textarea>
+                        <button id="analyzeResumeBtn" class="primary-btn">
+                            <i class="fa-solid fa-magnifying-glass-chart"></i> Analyze Resume
+                        </button>
+                    </div>
+
+                    <div id="resumeResultsCard" class="resume-result-card hidden">
+                        <h3><i class="fa-solid fa-square-poll-vertical"></i> Resume Feedback Report</h3>
+                        <div id="resumeFeedbackContent" class="feedback-body">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 4: Rectify Query (Escalation Hub) -->
+                <section class="tab-content" id="rectify-tab">
+                    <div class="section-header">
+                        <h2><i class="fa-solid fa-headset"></i> Rectify & Escalate Query to CDC</h2>
+                        <p>If your doubt requires human resolution, submission correction, or official CDC intervention, submit a ticket below.</p>
+                    </div>
+
+                    <div class="rectify-form-card">
+                        <form id="rectifyForm">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="studentName">Student Full Name *</label>
+                                    <input type="text" id="studentName" required placeholder="e.g. A. Vignesh">
+                                </div>
+                                <div class="form-group">
+                                    <label for="rollNumber">Roll Number / Register No *</label>
+                                    <input type="text" id="rollNumber" required placeholder="e.g. 21BCA045">
+                                </div>
+                                <div class="form-group">
+                                    <label for="department">Department & Batch *</label>
+                                    <input type="text" id="department" required placeholder="e.g. B.Sc Computer Science (2021-2024)">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">College Email ID *</label>
+                                    <input type="email" id="email" required placeholder="e.g. student@psgcas.ac.in">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number *</label>
+                                    <input type="tel" id="phone" required placeholder="e.g. 9876543210">
+                                </div>
+                                <div class="form-group">
+                                    <label for="queryCategory">Query Category *</label>
+                                    <select id="queryCategory" class="custom-select" required>
+                                        <option value="Placement Registration Portal Issue">Placement Registration Portal Issue</option>
+                                        <option value="Marksheet / CGPA Discrepancy">Marksheet / CGPA Discrepancy</option>
+                                        <option value="Company Eligibility Clarification">Company Eligibility Clarification</option>
+                                        <option value="Drive Attendance / Debarment Issue">Drive Attendance / Debarment Issue</option>
+                                        <option value="Other Technical / Administrative Doubts">Other Technical / Administrative Doubts</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="issueDescription">Detailed Description of Query / Problem *</label>
+                                <textarea id="issueDescription" rows="4" required placeholder="Explain your doubt or discrepancy clearly..."></textarea>
+                            </div>
+                            <button type="submit" class="primary-btn submit-ticket-btn">
+                                <i class="fa-solid fa-paper-plane"></i> Submit Ticket to CDC Office
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Submitted Tickets List -->
+                    <div class="tickets-view-card">
+                        <h3><i class="fa-solid fa-ticket"></i> Submitted Rectification Tickets</h3>
+                        <div id="ticketsContainer" class="tickets-container">
+                            <p class="empty-msg">No tickets submitted in this session yet.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 5: Placement FAQs -->
+                <section class="tab-content" id="faqs-tab">
+                    <div class="section-header">
+                        <h2><i class="fa-solid fa-circle-question"></i> Placement Frequently Asked Questions</h2>
+                        <p>Browse official PSGCAS placement guidelines and answers.</p>
+                    </div>
+                    <div id="faqAccordion" class="faq-accordion">
+                        <!-- Populated dynamically -->
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
